@@ -1,6 +1,35 @@
-# Project Instructions
+# CLAUDE.md
 
-This file provides guidance to AI agents working with this codebase.
+This file provides guidance to Claude Code (claude.ai/code) when working with code in this repository.
+
+## Projet
+
+Dépôt de test/démo pour la chaîne **SESHAT → IP Secure (projet Menezis)**.
+Le code applicatif est minimal et n'a pas vocation à grandir — sa raison d'être
+est de servir de support au scellement automatique de commits via le hook
+`.githooks/post-commit`.
+
+### Contenu applicatif
+
+- `greetings.py` — fonction `say_hello(name)`
+- `main.py` — point d'entrée qui importe `greetings` et appelle `say_hello`
+
+### Lancer le code
+
+```bash
+python3 main.py
+```
+
+Aucune dépendance, aucun framework de test, aucun linter configurés.
+`python3 -c "import ast, pathlib; [ast.parse(p.read_text()) for p in pathlib.Path('.').glob('*.py')]"` suffit comme check syntaxique.
+
+### Workflow git
+
+- `core.hooksPath` est positionné sur `.githooks/` (config locale, à reposer à chaque clone).
+- Chaque `git commit` déclenche `.githooks/post-commit` qui appelle
+  `seshat seal commit <sha> -p test` en arrière-plan. Les logs vont dans
+  `.git/seshat-seal.log` (non versionné).
+- Le seal est **non bloquant** : un échec côté Seshat n'annule pas le commit.
 
 ## SESHAT - Protection IP
 
