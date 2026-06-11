@@ -1,0 +1,28 @@
+#!/usr/bin/env bash
+# Auto-seal every commit through SESHAT (project: test → IP Secure / Menezis).
+# Runs in the background so it never blocks the commit.
+# Logs go to .git/seshat-seal.log (gitignored).
+
+set -u
+
+SESHAT_BIN="${SESHAT_BIN:-$HOME/.seshat/bin/seshat}"
+PROJECT_ID="test"
+SHA="$(git rev-parse HEAD)"
+REPO_ROOT="$(git rev-parse --show-toplevel)"
+LOG="$REPO_ROOT/.git/seshat-seal.log"
+
+if [ ! -x "$SESHAT_BIN" ]; then
+  echo "[$(date -u +%FT%TZ)] seshat CLI not found at $SESHAT_BIN — skipping seal for $SHA" >> "$LOG"
+  exit 0
+fi
+
+(
+  {
+    echo "[$(date -u +%FT%TZ)] sealing commit $SHA"
+    "$SESHAT_BIN" seal commit "$SHA" -p "$PROJECT_ID" --json
+    echo "[$(date -u +%FT%TZ)] exit=$?"
+  } >> "$LOG" 2>&1
+) &
+
+disown 2>/dev/null || true
+exit 0
