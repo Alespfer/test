@@ -1,0 +1,28 @@
+{
+  "project_id": "test",
+  "generated_at": "2026-06-11T10:39:52.657Z",
+  "total_proofs": 2,
+  "merkle_root": "f1954f81a7d5f2cd81e497badf279e3a90eb45afa5b0edb8c4d74e462b86a159b398385cf59356f5996157011d52a8e3305539cd0ec395b2d9fa045730d45613",
+  "proofs": [
+    {
+      "id": 12,
+      "category": "CODE",
+      "reference": "repo:99ce5899b6ad94b04b51a1276c9b12f7e252a006",
+      "fingerprint": "b5b243832d6cc26f2b77653f8a7651a64e937f875d1fa85068cff8764184fb85ffb323c797f27bfcb90a1b5609f5b3d6a9614d692855be42813305c07ce1bb84",
+      "ipsecure_contribution_id": "mD9DYZdEW3",
+      "ipsecure_certificate_url": null,
+      "anchored_at": null,
+      "effort_hours": 0
+    },
+    {
+      "id": 11,
+      "category": "CODE",
+      "reference": "commit:99ce5899",
+      "fingerprint": "65081aa8abcca3762b1c5dda8a3d1ca271b698328b0d966184a0ad25ee16f86875bd3fe3d77dce0955f71a133352280ee94e5927d22b7a3c34834326698f3a50",
+      "ipsecure_contribution_id": "wDiFJhAK1W",
+      "ipsecure_certificate_url": null,
+      "anchored_at": null,
+      "effort_hours": 0
+    }
+  ]
+}

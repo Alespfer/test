@@ -13,6 +13,7 @@ est de servir de support au scellement automatique de commits via le hook
 
 - `greetings.py` — fonction `say_hello(name)`
 - `main.py` — point d'entrée qui importe `greetings` et appelle `say_hello`
+- `releases/<version>_<date>/` — sorties de `bundle_release` (ZIP + rapport + chaîne de preuves pour dépôt légal). Versionné volontairement pour servir d'exemple.
 
 ### Lancer le code
 
@@ -21,15 +22,22 @@ python3 main.py
 ```
 
 Aucune dépendance, aucun framework de test, aucun linter configurés.
-`python3 -c "import ast, pathlib; [ast.parse(p.read_text()) for p in pathlib.Path('.').glob('*.py')]"` suffit comme check syntaxique.
+`python3 -m py_compile *.py` suffit comme check syntaxique.
 
 ### Workflow git
 
-- `core.hooksPath` est positionné sur `.githooks/` (config locale, à reposer à chaque clone).
+- Le hook vit dans `.githooks/` mais `core.hooksPath` n'est pas versionné. Après chaque clone :
+  ```bash
+  git config core.hooksPath .githooks
+  ```
 - Chaque `git commit` déclenche `.githooks/post-commit` qui appelle
   `seshat seal commit <sha> -p test` en arrière-plan. Les logs vont dans
   `.git/seshat-seal.log` (non versionné).
-- Le seal est **non bloquant** : un échec côté Seshat n'annule pas le commit.
+- Le seal est **non bloquant** : un échec côté Seshat n'annule pas le commit
+  (et n'est pas affiché dans le terminal). Pour vérifier le résultat :
+  ```bash
+  tail -f .git/seshat-seal.log
+  ```
 
 ## SESHAT - Protection IP
 
@@ -43,6 +51,11 @@ Ce projet utilise SESHAT pour le scellement et la protection des actifs IP.
 - Cette règle **annule** l'invariant n°3 « `dry_run` obligatoire avant eIDAS » ci-dessous **pour le type `commit` uniquement**. Les autres types (`pr`, `tag`, `release`, `seal_file`, `certify_research`) gardent le flux preview + confirmation.
 - Les invariants n°1 (secret scan) et n°2 (authorship) restent applicables : un `secret_scan_blocked` doit toujours être remonté à l'utilisateur avant tout `force_secret_scan`.
 - Si le seal échoue, ne pas relancer le commit ; rapporter l'erreur à l'utilisateur.
+
+> **Précédence vs. `~/.claude/rules/safety.md`** — la guardrail globale impose
+> de demander confirmation avant toute mutation MCP. La règle ci-dessus est
+> une **exception délibérée** au profit du flux automatisé, limitée au type
+> `commit`. Aucune autre mutation SESHAT n'est pré-approuvée.
 
 ### Configuration
 | Paramètre | Valeur |
@@ -60,29 +73,18 @@ Ce projet utilise SESHAT pour le scellement et la protection des actifs IP.
 
 Puis utiliser ces valeurs pour tous les seals de la session.
 
-**Pour configurer des defaults permanents:**
-```
-configure(action="update_project", project_id="test",
-         default_asset_types=["logiciel"], default_objective="Mon objectif R&D")
-```
+### Outils SESHAT utilisés ici
 
-### Outils SESHAT disponibles (tous appelables via MCP)
+Trois outils suffisent pour le scénario de démo de ce repo ; le catalogue
+complet est découvrable via `status(verbose=true)` ou la doc MCP.
 
-| Outil | Usage | Exemple |
-|-------|-------|---------|
-| **status** | Vérifier l'état du système (git host, Notion, Jira, IP Secure). **Appeler en premier.** | `status(verbose=true)` |
-| **seal** | Sceller commit, PR mergée, tag, release, ou issue Jira | `seal(project="test", type="pr", ref="42")` |
-| **certify_research** | Certifier notes Obsidian, Notion et/ou worklogs Jira | `certify_research(project="test", dry_run=true)` |
-| **effort_report** | Rapport R&D (summary, detailed, valorisation, markdown, dossier) | `effort_report(project="test", format="valorisation")` |
-| **export_proofs** | Exporter les preuves en Markdown, JSON ou CSV (audit, INPI, avocats) | `export_proofs(project="test", output_path="./preuves", format="markdown")` |
-| **bundle_release** | Dossier complet pour dépôt légal (ZIP + rapport + chaîne de preuves) | `bundle_release(project="test", tag="v1.0.0")` |
-| **annotate** | Qualifier rétroactivement une entrée (objectif, asset_types) | `annotate(id=42, objective="Mon objectif R&D")` |
-| **batch_annotate** | Qualifier en lot (1-100 entrées, mêmes métadonnées) | `batch_annotate(ids=[1,2,3], asset_types=["logiciel"])` |
-| **budget_alerts** | Détecter dépassements, oublis de saisie, drift Jira | `budget_alerts(project="test")` |
-| **configure** | Configurer projets, git host, defaults, Notion, Jira | `configure(action="update_project", project_id="test", ...)` |
-| **report_issue** | Signaler un bug ou suggestion au mainteneur SESHAT | `report_issue(type="bug", title="...", description="...")` |
+| Outil | Usage |
+|-------|-------|
+| **status** | État du système (git host, Notion, Jira, IP Secure). **Appeler en premier.** |
+| **seal** | Sceller commit (via le hook), PR mergée, tag, release. |
+| **bundle_release** | Dossier complet pour dépôt légal — produit les sorties dans `releases/`. |
 
-**Règle** : Toujours utiliser `dry_run=true` pour prévisualiser avant seal/certify_research.
+**Règle** : Toujours utiliser `dry_run=true` pour prévisualiser avant seal/certify_research (sauf `type="commit"`, cf. ci-dessus).
 
 ### Réflexes pré-seal obligatoires (F-031 / #463)
 
@@ -103,16 +105,17 @@ Trois invariants à intégrer pour ne pas polluer la chaîne de preuves :
 - **Notion** : si `notion_database_id` est défini (propriétés: Hours, Class, Status=reviewed)
 - **Jira** : si `jira_project_key` est défini (worklogs comme effort R&D)
 
-Pour ajouter une source :
+### Configurer sources et defaults
+
+Tout passe par `configure(action="update_project", ...)`. Exemples :
+
 ```
+# Ajouter Notion + Jira comme sources
 configure(action="update_project", project_id="test",
          notion_database_id="<URL ou UUID>",
          jira_project_key="PROJ")
-```
 
-### Modifier les defaults
-
-```
+# Poser des defaults permanents (évite la question en début de session)
 configure(action="update_project", project_id="test",
          default_asset_types=["logiciel", "base_donnees"],
          default_objective="Optimisation performance API")
