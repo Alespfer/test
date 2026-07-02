@@ -1,0 +1,21 @@
+{
+  "version": "v1.6.0",
+  "project": "test",
+  "project_name": "Test",
+  "created_at": "2026-07-02T09:34:24.602Z",
+  "files": [
+    {
+      "name": "test_v1.6.0_source.zip",
+      "sha512": "d5d8dbbb3db038acd902b70cf5904538cf70796a9db5de8583c33e3e6bdf6b595e88cf932edb771e64a765c73f439aa382128b95616cec923f88826e92a84f97"
+    },
+    {
+      "name": "RD_REPORT.md",
+      "sha512": "bc198a154d678d17ad048e7d9fe5d69e416444e636a8869441336b7307b8ae99ec7a2d492a7b8e5992dc29a68b3d96af9574c95457059dcf7ea9e99ee8c45365"
+    },
+    {
+      "name": "PROOF_CHAIN.json",
+      "sha512": "81cc5c956d3dd948a92b78780c2c8b61c753a7fe436e8785a1811009c7601cc98d3af8c6702a610f1ba061669b8875eb76421a748352bb51962bcd57e8d4f03a"
+    }
+  ],
+  "merkle_root": "b499b25e1a9fa472ee307ca2a0ee2697e07cb39da35fffc3101b8c6bae75cf2dba86f26fbc6c18f749e9c3200fea9ccb0096477c0a180b4cd422195ea0db587a"
+}
