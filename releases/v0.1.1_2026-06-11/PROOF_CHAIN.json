@@ -1,9 +1,59 @@
 {
   "project_id": "test",
-  "generated_at": "2026-06-11T10:39:52.657Z",
-  "total_proofs": 2,
-  "merkle_root": "f1954f81a7d5f2cd81e497badf279e3a90eb45afa5b0edb8c4d74e462b86a159b398385cf59356f5996157011d52a8e3305539cd0ec395b2d9fa045730d45613",
+  "generated_at": "2026-06-11T14:11:20.364Z",
+  "total_proofs": 7,
+  "merkle_root": "f2841788a03b9cdbd6bd8aad023f81e017e3a8f59c29f92863edb634fd632e6f63af9620f748b606c61fd68bb37eb12a3790a19ef30c2f7c3f34cfbac7eea43b",
   "proofs": [
+    {
+      "id": 17,
+      "category": "CODE",
+      "reference": "commit:842882f2",
+      "fingerprint": "0b3166b4b8b57041f9547f07a4ab77847b419dc249ae5876025a30c437c7504648ad54db4e45fe1ee87e109a09996b17bb063f15f2ac868bd268b0bdad4e3bd7",
+      "ipsecure_contribution_id": "8BWFp0MC6D",
+      "ipsecure_certificate_url": null,
+      "anchored_at": null,
+      "effort_hours": 0
+    },
+    {
+      "id": 16,
+      "category": "CODE",
+      "reference": "commit:4e55312f",
+      "fingerprint": "bc2ba2485f0b5e5f9c5fb60ea12ae9e49921a689890db69e7245524750a01883b0096632f822dc3d6eada0b333fef83327e618769cc9b2a730c8b5c54229d4db",
+      "ipsecure_contribution_id": "OBXyPRXoER",
+      "ipsecure_certificate_url": null,
+      "anchored_at": null,
+      "effort_hours": 0
+    },
+    {
+      "id": 15,
+      "category": "CODE",
+      "reference": "commit:939dca6e",
+      "fingerprint": "5ff09b417e16190fcb38e7b8e1a0f64d58be89f571f78ca64264110f343252ddce0e70880d717c466cafdb8315ced45f1a69f80135230f4f64562efec1694dc7",
+      "ipsecure_contribution_id": "TSghFB3qLk",
+      "ipsecure_certificate_url": null,
+      "anchored_at": null,
+      "effort_hours": 0
+    },
+    {
+      "id": 14,
+      "category": "CODE",
+      "reference": "commit:ec105858",
+      "fingerprint": "ccd5623e211eae3d891e35bf5a4178fb96e52de79b3434bebbd7d7df6d9364eda9a2bee7e5ff0b85d956ff415a2c2379fb8ad1a20b5fb10c0aaeb2fc6bf5f73a",
+      "ipsecure_contribution_id": "VzBBbl65nx",
+      "ipsecure_certificate_url": null,
+      "anchored_at": null,
+      "effort_hours": 0
+    },
+    {
+      "id": 13,
+      "category": "RELEASE",
+      "reference": "v0.1.1",
+      "fingerprint": "fb0b925a9c41f72a3b8950ecbd3f98d84be3d3eae2554d31d7db79fc2a37f226b7dcabeb050ed99e9d9726bafb852a4018fcaf5836a07cd517da9be6639f0148",
+      "ipsecure_contribution_id": "LqBajMTtst",
+      "ipsecure_certificate_url": null,
+      "anchored_at": null,
+      "effort_hours": 0
+    },
     {
       "id": 12,
       "category": "CODE",

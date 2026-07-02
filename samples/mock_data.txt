@@ -1,0 +1,33 @@
+SESHAT TEST WAVE — MOCK MEASUREMENT LOG
+=======================================
+
+Generated  : 2026-06-18
+Project    : test (SESHAT project_id)
+IP Secure  : Menezis (WpAnLoLFGQ)
+Purpose    : Sample text payload used to exercise seal_file() on a plain
+             text file. Content is entirely fabricated. No PII, no secret.
+
+# Synthetic timing samples (ms) — fictional dry_run -> seal latencies
+iter,t_dry_run,t_seal_real,ipsecure_ok
+1,184,612,true
+2,201,587,true
+3,198,624,true
+4,176,n/a,false
+5,210,599,true
+6,193,634,true
+7,205,610,true
+8,189,n/a,false
+9,221,648,true
+10,197,602,true
+
+# Aggregate
+mean_t_dry_run_ms : 197.4
+mean_t_seal_ms    : 614.5 (only over rows where ipsecure_ok=true)
+orphan_rate       : 0.20  (2/10 — reproduces F-NEW-4 pattern)
+
+# Notes
+- The two false rows simulate the silent IP Secure disconnect described
+  in F-NEW-4 of test_08062026.md: seal_file succeeds locally (ledger row
+  written) but ipsecure_contribution_id remains null.
+- Real measurements during this test wave will be appended in a separate
+  file once the iterations are complete; this file is only the template.

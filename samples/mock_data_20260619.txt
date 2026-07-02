@@ -1,0 +1,35 @@
+SESHAT TEST WAVE 2 — MOCK MEASUREMENT LOG
+==========================================
+
+Generated  : 2026-06-19
+Project    : test (SESHAT project_id)
+IP Secure  : Menezis (WpAnLoLFGQ)
+Purpose    : Sample text payload used to exercise seal_file() on a plain
+             text file under SESHAT 1.5.4. Content is entirely fabricated.
+             No PII, no secret.
+
+# Synthetic timing samples (ms) — fictional v2 dry_run -> seal latencies
+iter,t_dry_run,t_seal_real,ipsecure_ok,note
+1,172,598,true,baseline post-1.5.4
+2,189,610,true,baseline post-1.5.4
+3,178,587,true,baseline post-1.5.4
+4,184,602,true,
+5,191,615,true,
+6,176,594,true,
+7,182,609,true,
+8,179,601,true,
+9,185,607,true,
+10,177,599,true,
+
+# Aggregate
+mean_t_dry_run_ms : 181.3
+mean_t_seal_ms    : 602.2
+orphan_rate       : 0.00 (template — to be populated by actual measurements)
+
+# Notes
+- File companion to mock_research_note_20260619.md.
+- The orphan_rate field is initialized to zero — it will be updated only
+  if F-NEW-4 / F-NEW-11 patterns are observed during the live wave.
+- The previous wave (2026-06-18) had 100% certification failure at Jinnove,
+  unrelated to SESHAT. The present wave is meant to isolate SESHAT-side
+  behaviour against that backdrop.
